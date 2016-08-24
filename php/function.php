@@ -14,7 +14,30 @@ function connect(){
 
     $db_selected = mysqli_select_db( "Registration", $link);
     if (!$db_selected) {
-        exit( print_r(mysqli_error(),true) );
+        exit( print_r(mysqli_connect_error(),true) );
     }
     return $link;
 }
+//
+//// Вносим данные в БД
+//function addQuery($user_name, $user_surname, $user_age, $user_message){
+//    $query="INSERT INTO Registration
+//				(name, surname, age, text, img)
+//			VALUES
+//				(
+//				'".$user_name."',
+//				'".$user_surname."',
+//				'".$user_age."',
+//				'".$user_message."',
+//				'".'0'."',
+//				'".'0'."',
+//				'".'123'."'
+//      )
+//			";
+//
+//    $result = mysqli_query($query);
+//    if( $result === false ) {
+//        exit( print_r(mysqli_error(),true) );
+//    }
+//    return true;
+//}

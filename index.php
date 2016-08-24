@@ -1,11 +1,12 @@
 <?php
-include ('php/function.php');
 
-if ( isset($_POST["adduser"])){
+require_once ('php/function.php');
+
+if ( isset($_POST["add-user"])){
     if (empty($_POST["user_name"]) || empty($_POST["user_surname"]) || empty($_POST["user_age"])|| empty($_POST["user_message"])) exit ("Данные отсутствуют");
 
     $link=connect();
-    addQuery($_POST["user_name"], $_POST["user_surname"], $_POST["user_age"], $_POST["user_message"]);
+    addQuery($_POST["user_name"], $_POST["user_surnam"], $_POST["user_age"], $_POST["user_message"]);
     close($link);
 }
 
@@ -39,8 +40,8 @@ if ( isset($_POST["adduser"])){
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css.css">
     <link rel="stylesheet" href="/css/animate.css.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+<!--    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 </head>
 <body style="background-color:whitesmoke;">
 <div class="col-sm-3 col-sm-offset-4">
@@ -61,7 +62,7 @@ if ( isset($_POST["adduser"])){
                 <!-- Фамилия -->
                 <div class="form-group col-sm-12">
                     <label for="surname" class="h4">Фамилия</label>
-                    <input name="user_surname" type="text" class="form-control" id="surname" placeholder="Введите свою фамилию" data-error="Забыли свою фамилию?" required>
+                    <input name="user_surnam" type="text" class="form-control" id="surname" placeholder="Введите свою фамилию" data-error="Забыли свою фамилию?" required>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
@@ -90,7 +91,7 @@ if ( isset($_POST["adduser"])){
             </div>
             <div class="row">
                 <div class="form-group col-sm-3 col-sm-offset-3">
-                    <input type="submit" class="btn btn-default" value="Зарегистрироваться" name="adduser">
+                    <input type="submit" class="btn btn-default" value="Зарегистрироваться" name="add-user">
                 </div>
             </div>
             <div id="msgSubmit" class="h3 text-center hidden"></div>
