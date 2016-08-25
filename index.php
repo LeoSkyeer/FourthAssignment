@@ -64,6 +64,7 @@ if (isset($_POST['add_user'])){
             </div>
             </div>
             
+            <!--Кнопка-->
             <div class="row">
                 <div class="form-group col-sm-3 col-sm-offset-0">
                     <input type="submit" class="btn btn-default" value="Зарегистрироваться" name="add_user">
