@@ -48,6 +48,58 @@ $new_name = time().'.'.$ext; // новое имя с расширением
 $full_path = $path.$new_name; // полный путь с новым именем и расширением
 
 if($_FILES['fileToUpload']['error'] == 0){
+    if(substr($_FILES["fileToUpload"]["name"], -3)=="jpg" || substr($_FILES["file"]["name"], -3)=="png"){
     if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $full_path)){
+        echo "Картинка загружена, регистрация прошла успешно";
+    }else{
+        echo "Warning";
     }
+    }
+}
+
+// Авторизация
+
+function Autorization($e_login, $link) {
+    if (isset($_POST['setLogin'])){
+        $query=mysqli_query($link, "SELECT name FROM Registration_Data WHERE name='$e_login'");
+        $user_data = mysqli_fetch_array($query);
+        if ($user_data['name']== $e_login){
+            $_SESSION["is_auth"] = true;
+        } else {
+            $_SESSION["is_auth"] = false;
+        }
+    }
+}
+
+// Создаем сессию
+function isAuth() {
+    if (isset($_SESSION["is_auth"])) { //Если сессия существует
+        return $_SESSION["is_auth"]; //Возвращаем значение переменной сессии is_auth (хранит true если авторизован, false если не авторизован)
+    }
+    else return false; //Пользователь не авторизован, т.к. переменная is_auth не создана
+}
+
+// Закрываем соединение
+function close($link){
+    mysqli_close($link);
+}
+
+// Выходим из сессии
+function logout() {
+    $_SESSION = array(); //Очищаем сессию
+    session_destroy(); //Уничтожаем
+}
+
+define('WEB_DOMAIN','http://building-a-bootstrap-contact-form-using-php-and-ajax-master');
+define('WEB_FOLDER','/');
+
+function myUrl($url='',$fullurl=false){
+    $s=$fullurl ? WEB_DOMAIN : '';
+    $s.=WEB_FOLDER.$url;
+    return $s;
+}
+
+function redirect($url){
+    header( 'Location: '.myUrl($url) );
+    exit;
 }
