@@ -23,14 +23,15 @@ function connect(){
 
 
 //ДОбавляем данные
-function addQuery($user_name, $user_age, $user_message, $link){
+function addQuery($user_name, $user_age, $user_message, $name_in_db, $link){
     $query="INSERT INTO Registration_Data
-				(name, age, text)
+				(name, age, text, img)
 			VALUES
 				(
 				'".$user_name."',
 				'".$user_age."',
-				'".$user_message."'
+				'".$user_message."',
+				'".$name_in_db."'
       )
 			";
 
@@ -46,6 +47,7 @@ $path = 'photos/';
 $ext = array_pop(explode('.',$_FILES['fileToUpload']['name'])); // расширение
 $new_name = time().'.'.$ext; // новое имя с расширением
 $full_path = $path.$new_name; // полный путь с новым именем и расширением
+$name_in_db = substr($new_name, 0, -4);
 
 if($_FILES['fileToUpload']['error'] == 0){
     if(substr($_FILES["fileToUpload"]["name"], -3)=="jpg" || substr($_FILES["file"]["name"], -3)=="png"){

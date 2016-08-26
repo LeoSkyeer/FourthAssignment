@@ -9,7 +9,7 @@ if (isset($_POST['add_user'])){
 
 
     $link=connect();
-    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"],$link);
+    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"],$name_in_db, $link);
     mysqli_close ($link);
 }
 
