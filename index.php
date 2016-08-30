@@ -9,7 +9,9 @@ if (isset($_POST['add_user'])){
 
 
     $link=connect();
-    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"],$name_in_db, $link);
+    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"], $link);
+//    addQuery_2($link);
+    
     mysqli_close ($link);
 }
 
@@ -23,6 +25,7 @@ if (isset($_POST["setLogin"])){
 if (isset($_POST["setExit"])){
     logout();
 }
+
 
 ?>
 
@@ -43,7 +46,7 @@ if (isset($_POST["setExit"])){
 <div class="row">
     <!-- Заголовок -->
     <div class="col-md-3 col-md-offset-4">
-        <p class="h1">Регистрация</p>
+        <p class="h1" style="text-align: center">Регистрация</p>
     </div>
 
     <form role="form" class="shake" action="index.php" method="POST" id="loginPassword" data-toggle="validator" name="setLogin" enctype="multipart/form-data">
@@ -71,8 +74,60 @@ if (isset($_POST["setExit"])){
     </form>
     </div>
 
-<div class="col-sm-3 col-sm-offset-4">
-    <div class="well" style="margin-top: 0%; background-color:lightgrey">
+<div class="col-sm-5 col-sm-offset-3">
+    <?php
+        if (isAuth()){
+            echo '
+        <div class="well" style="margin-top: 0%; background-color:lightgrey">
+        <h3 style="text-align: center;">Зарегистрированные картиночки</h3>
+        <form role="form" id="contactForm"  class="shake" action="index.php" method="POST" enctype="multipart/form-data">
+          
+            
+          <div class="col-md-12 col-md-offset-0">';
+            $link = connect();
+            $arr=getData($link);
+            foreach ($arr as $value){
+           echo ' <div class="well">
+            
+                <div class="row">
+                
+                  <div class="col-md-4">
+                    <p>Имя пользователя:</p>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <p> '.$value["name"].'</p>      
+                  </div>
+                     
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <p>Картинка:</p>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <p></p>
+                  </div>
+                      
+                  <div class="col-md-offset-10 ">
+                     <a href="/php/edit.php?id='.$value["id"].'">Редактировать</a>
+                  </div>
+                  
+
+                  
+                  <!--<div class="col-md-offset-10">
+                     <a href="/index.php?action=accept&id=">Подтвердить</a>
+                  </div>-->
+                    
+                 </div>
+            </div>';}
+          echo '</div>
+        
+         <div class="clearfix"></div>
+        </form>
+   </div>';
+        }else{
+            echo '<div class="well" style="margin-top: 0%; background-color:lightgrey">
         <h3 style="text-align: center;">Регистрационные данные</h3>
         <form role="form" id="contactForm"  class="shake" action="index.php" method="POST" enctype="multipart/form-data">
             <!-- Имя -->
@@ -117,7 +172,10 @@ if (isset($_POST["setExit"])){
             </div>
             <div class="clearfix"></div>
         </form>
-    </div>
+    </div>';
+        }
+    ?>
+
 </div>
 
 
