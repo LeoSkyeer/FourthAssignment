@@ -3,10 +3,10 @@
 require_once ('function.php');
 
 if ( isset($_POST["saveEditText"])){
-    if (empty($_POST["user_message"])) exit ("Данные отсутствуют");
+    if (empty($name_in_db)) exit ("Данные отсутствуют");
 
     $link=connect();
-    saveText($_GET["id"], $_POST["img"]);
+    saveText($_GET["user_id"], $_POST["image"], $link);
     close($link);
     redirect ("index.php");
 }
@@ -31,8 +31,7 @@ if ( isset($_POST["goBack"])){
 </head>
 <?php
 $link=connect();
-$text=getText1($_GET["id"]);
-//print_r ($accept);
+$text=getText1($_GET["id"], $link);
 close($link);
 
 ?>
@@ -44,7 +43,7 @@ close($link);
         <h3 class="text-center">Редактирование</h3>
         <form role="form" id="contactForm" data-toggle="validator" class="shake" action="<?php echo "edit.php?id=".$_GET["id"];?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <textarea name="user_message" class="form-control" rows="5" placeholder=""><?=$text["text"];?></textarea>
+                <textarea name="user_message" class="form-control" rows="5" placeholder=""><?=$text["image"];?></textarea>
             </div>
             <!-- Кнопы -->
             <input type="submit" id="form-submit" class="btn btn-success btn-md pull-right " value="Cохранить" name="saveEditText">

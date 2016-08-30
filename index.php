@@ -9,9 +9,9 @@ if (isset($_POST['add_user'])){
 
 
     $link=connect();
-    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"], $link);
-//    addQuery_2($link);
-    
+    addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"], $name_in_db, $link);
+
+
     mysqli_close ($link);
 }
 
@@ -106,11 +106,15 @@ if (isset($_POST["setExit"])){
                   </div>
                   
                   <div class="col-md-4">
-                    <p></p>
+                    <p>'.$name_in_db.'</p>
                   </div>
                       
-                  <div class="col-md-offset-10 ">
+                  <div class="col-md-offset-9 ">
                      <a href="/php/edit.php?id='.$value["id"].'">Редактировать</a>
+                  </div>
+                  
+                     <div class="col-md-offset-9 ">
+                     <a href="/php/edit.php?id='.$value["id"].'">Удалить картинку</a>
                   </div>
                   
 

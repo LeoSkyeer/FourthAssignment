@@ -20,7 +20,7 @@ function connect(){
 }
 
 //ДОбавляем данные Registration_Data
-function addQuery($user_name, $user_age, $user_message, $link){
+function addQuery($user_name, $user_age, $user_message, $name_in_db, $link){
     $query="INSERT INTO Registration_Data
 				(name, age, text)
 			VALUES
@@ -30,27 +30,18 @@ function addQuery($user_name, $user_age, $user_message, $link){
 				'".$user_message."'
       )
 			";
-
-    $result = mysqli_query($link,$query);
-    if( $result === false ) {
-        exit( print_r(mysqli_connect_errno(),true) );
-    }
-    return true;
-}
-
-
-//ДОбавляем данные Image_data
-function addQuery_2($user_id, $name_in_db, $link){
-    $query2="INSERT INTO Image_Data
+    $query_2 = "INSERT INTO Image_Data
 				(user_id, image)
 			VALUES
 				(
-				'".$user_id."',
+				(SELECT id FROM Registration_Data WHERE NAME='".$user_name."'),
 				'".$name_in_db."'
       )
 			";
 
-    $result = mysqli_query($link, $query2);
+//    print_r($query_2);
+    $result = mysqli_query($link,$query);
+    $result_2 = mysqli_query($link,$query_2);
     if( $result === false ) {
         exit( print_r(mysqli_connect_errno(),true) );
     }
@@ -58,11 +49,10 @@ function addQuery_2($user_id, $name_in_db, $link){
 }
 
 
-
 //Сохранить картинку
-function imageg(){
+
     $path = 'photos/';
-    if (!isset($_FILES['fileToUpload'])) {
+
         $ext = array_pop(explode('.', $_FILES['fileToUpload']['name'])); // расширение
         $new_name = time() . '.' . $ext;
         $full_path = $path . $new_name;
@@ -76,27 +66,6 @@ function imageg(){
 
             }
         }
-
-        return $name_in_db;
-    }
-}
-
-
-//Сохраняем картинку
-
-
-//    $new_name = time() . '.' . $ext; // новое имя с расширением
-//    $full_path = $path . $new_name; // полный путь с новым именем и расширением
-//    $name_in_db = substr($new_name, 0, -4);
-//
-//    if ($_FILES['fileToUpload']['error'] == 0) {
-//        if (substr($_FILES["fileToUpload"]["name"], -3) == "jpg" || substr($_FILES["file"]["name"], -3) == "png") {
-//            if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $full_path)) {
-//                echo "Регистрация прошла успешно";
-//            }
-//        }
-//    }
-//
 
 
 // Авторизация
@@ -128,23 +97,6 @@ function getData($link){
     return $arr;
 
 }
-
-//Выбираем IDшник из Registration_DATA
-//function indentif_user($link){
-//    $query = "SELECT id from Registration_Data";
-//    $stmt = mysqli_query($link, $query);
-//    if ($stmt === false) {
-//        exit(print_r(mysqli_errno($link), true));
-//    }
-//    while ($row = mysqli_fetch_array( $stmt, MYSQLI_ASSOC )) {
-//        $user_id[] = $row;
-//    }
-//    return $user_id;
-//}
-
-
-
-
 
 // Создаем сессию
 function isAuth() {
@@ -184,9 +136,9 @@ function redirect($url){
 function getText1($id, $link){
     $sql = "
        SELECT
-         img
+         image
        FROM
-         Registration_Data
+         Image_Data
       WHERE id=".$id;
 
     $stmt = mysqli_query($link, $sql);
@@ -198,12 +150,12 @@ function getText1($id, $link){
 }
 
 // Сохранение
-function saveText($id, $img, $link){
+function saveText($id, $name_in_db, $link){
     $sql = "
    				UPDATE
-   					Registration_Data
+   					Image_Data
    				SET
-   					img = '".$img."',
+   					image = '".$name_in_db."',
    				WHERE
    					id = ".$id;
 
@@ -214,19 +166,3 @@ function saveText($id, $img, $link){
     return true;
 }
 
-// Подтвеждение
-//function saveAccept($id, $link){
-//    $sql = "
-//             				UPDATE
-//             					Registration_Data
-//             				SET
-//             					accept = 1
-//             				WHERE
-//             					id = ".$id;
-//
-//    $stmt = mysqli_query($link, $sql );
-//    if( $stmt === false ){
-//        exit( print_r(mysqli_errno($link),true));
-//    }
-//    return true;
-//}
