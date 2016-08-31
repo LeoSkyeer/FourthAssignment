@@ -106,7 +106,7 @@ if (isset($_POST["setExit"])){
                   </div>
                   
                   <div class="col-md-4">
-                    <p>'.$name_in_db.'</p>
+                    <p>'.$value["image"].'</p>
                   </div>
                       
                   <div class="col-md-offset-9 ">

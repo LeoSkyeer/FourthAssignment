@@ -49,14 +49,16 @@ function addQuery($user_name, $user_age, $user_message, $name_in_db, $link){
 }
 
 
-//Сохранить картинку
 
+//Сохраняем картинку
     $path = 'photos/';
-
-        $ext = array_pop(explode('.', $_FILES['fileToUpload']['name'])); // расширение
+        $ext = array_pop(explode('.', $_FILES['fileToUpload']['image'])); // расширение
         $new_name = time() . '.' . $ext;
+
         $full_path = $path . $new_name;
-        $name_in_db = substr($new_name, 0, -4);
+
+        $name_in_db = substr($new_name, 0, -1);
+
 
         if ($_FILES['fileToUpload']['error'] == 0) {
             if (substr($_FILES["fileToUpload"]["name"], -3) == "jpg" || substr($_FILES["file"]["name"], -3) == "png") {
@@ -66,6 +68,10 @@ function addQuery($user_name, $user_age, $user_message, $name_in_db, $link){
 
             }
         }
+
+
+
+
 
 
 // Авторизация
@@ -85,7 +91,7 @@ function Autorization($e_login, $link) {
 
 //Получаем данные
 function getData($link){
-    $sql = "SELECT id, name FROM Registration_Data";
+    $sql = "SELECT Registration_Data.id, Registration_Data.name, Image_Data.image FROM Registration_Data INNER JOIN Image_Data ON Registration_Data.id=Image_Data.user_id";
     $stmt = mysqli_query($link, $sql);
     if ($stmt === false) {
         exit(print_r(mysqli_errno($link), true));
@@ -139,7 +145,7 @@ function getText1($id, $link){
          image
        FROM
          Image_Data
-      WHERE id=".$id;
+      WHERE user_id=".$id;
 
     $stmt = mysqli_query($link, $sql);
     if( $stmt === false ) {
@@ -150,14 +156,14 @@ function getText1($id, $link){
 }
 
 // Сохранение
-function saveText($id, $name_in_db, $link){
+function saveText($id, $image, $link){
     $sql = "
    				UPDATE
    					Image_Data
    				SET
-   					image = '".$name_in_db."',
+   					image = '".$image."'
    				WHERE
-   					id = ".$id;
+   					user_id = ".$id;
 
     $stmt = mysqli_query($link, $sql );
     if( $stmt === false ){
