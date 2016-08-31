@@ -6,7 +6,7 @@ if ( isset($_POST["saveEditText"])){
     if (empty($_POST["user_message"])) exit ("Данные отсутствуют");
 
     $link=connect();
-    saveText($_POST["id"], $_POST["image"], $link);
+    saveText($_GET["id"], $_POST["user_message"], $link);
     close($link);
     redirect ("index.php");
 }
@@ -41,7 +41,7 @@ close($link);
 <div class="col-sm-8 col-sm-offset-2">
     <div class="well" style="margin-top: 5%;">
         <h3 class="text-center">Редактирование</h3>
-        <form role="form" id="contactForm" data-toggle="validator" class="shake" action="<?php echo "edit.php?id=".$_GET["user_id"];?>" method="POST" enctype="multipart/form-data">
+        <form role="form" id="contactForm" data-toggle="validator" class="shake" action="<?php echo "edit.php?id=".$_GET["id"];?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <textarea name="user_message" class="form-control" rows="5" placeholder=""><?=$text["image"];?></textarea>
             </div>
