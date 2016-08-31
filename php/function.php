@@ -172,3 +172,17 @@ function saveText($id, $image, $link){
     return true;
 }
 
+
+function delete($id, $link){
+    $del = "
+                DELETE FROM 
+                    Image_Data
+                WHERE
+                    id = ".$id;
+
+    $stmt = mysqli_query($link, $del );
+    if( $stmt === false ){
+        exit( print_r(mysqli_errno($link),true));
+    }
+    return true;
+}

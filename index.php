@@ -10,7 +10,7 @@ if (isset($_POST['add_user'])){
 
     $link=connect();
     addQuery($_POST["user_name"], $_POST["user_age"],$_POST["user_message"], $name_in_db, $link);
-
+//    delete($_GET["id"], $link);
 
     mysqli_close ($link);
 }
@@ -114,7 +114,7 @@ if (isset($_POST["setExit"])){
                   </div>
                   
                      <div class="col-md-offset-9 ">
-                     <a href="/php/edit.php?id='.$value["id"].'">Удалить картинку</a>
+                     <a href="/php/confirm.php?id='.$value["id"].'">Удалить картинку</a>
                   </div>
                   
 
